@@ -5,13 +5,16 @@ Cours EPSI : Intégration de données. TP: LabelSound a besoin d'un ETL pour cha
 ## Structure du repository
 ```
 project/
+├── app/               # FastAPI
+├── data
+│   ├── processed
+│   ├── raw
 ├── notebooks/          # Chaque dev peut travailler son ETL ici
 │   ├── etl_nb_songs_per_genre.ipynb
 │   ├── etl_popularity.ipynb
 ├── src/               # Code modulaire (à remplir progressivement)
 │   ├── __init__.py
 │   ├── etl/
-├── app/               # FastAPI
 ├── requirements.txt
 └── README.md
 
