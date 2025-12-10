@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from app.models.schemas import TopGenresResponse
-from src.etl.extractors import extract_spotify_data
-from src.etl.transformers import get_top_genres_by_popularity
+from src.extractors.extractor_spotify import extract_spotify_data
+from src.transformers.transformer_spotify import get_top_genres_by_popularity
 
 router = APIRouter(
     prefix="/spotify",
