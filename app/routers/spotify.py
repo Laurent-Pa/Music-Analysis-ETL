@@ -14,7 +14,7 @@ DATA_PATH = "data/raw/high_popularity_spotify_data.csv"
 @router.get("/top-genres", response_model=TopGenresResponse)
 def get_top_genres(top_n: int = 3):
     """
-    Retourne les N genres musicaux les plus populaires.
+    Retourne les N genres musicaux les plus populaires d'après Spotify.
 
     Args:
         top_n: Nombre de genres à retourner (par défaut 3)

@@ -2,8 +2,8 @@ from fastapi import FastAPI
 from app.routers import spotify
 
 app = FastAPI(
-    title="Spotify Analytics API",
-    description="API pour analyser les données Spotify",
+    title="OpenSound Analytics API",
+    description="API pour analyser des données musicales",
     version="1.0.0"
 )
 
@@ -12,13 +12,13 @@ app.include_router(spotify.router)
 
 @app.get("/")
 def read_root():
-    """Page d'accueil de l'API"""
+    """Page d'accueil de l'API OpenSound"""
     return {
-        "message": "Bienvenue sur l'API Spotify Analytics",
+        "message": "Bienvenue sur OpenSound Analytics",
         "version": "1.0.0"
     }
 
 @app.get("/health")
 def health_check():
-    """Endpoint de vérification de santé"""
+    """Endpoint de vérification de l'état de l'application"""
     return {"status": "healthy"}
