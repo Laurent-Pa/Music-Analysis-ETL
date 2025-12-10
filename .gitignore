@@ -1,0 +1,38 @@
+# Environnement virtuel (cf fichier requirements.txt)
+TP_Data_M/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Python (fichiers compilés, optimisés et extensions windows)
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Fichiers de sortie des notebooks
+*.nbconvert.ipynb
+
+# Environnements virtuels génériques
+venv/
+env/
+ENV/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Données (pour ne pas versionner les gros fichiers de données)
+# on peut stocker les csv
+*.xlsx
+*.json
+
