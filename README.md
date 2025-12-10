@@ -10,7 +10,6 @@ project/
 │   ├── etl_popularity.ipynb
 ├── src/               # Code modulaire (à remplir progressivement)
 │   ├── __init__.py
-│   ├── data/
 │   ├── etl/
 ├── app/               # FastAPI
 ├── requirements.txt
@@ -28,7 +27,7 @@ project/
 
 2. Créer et activer l'environnement virtuel
 ```bash
-   python -m venv .venv
+   python3 -m venv .venv
    source .venv/bin/activate  # Mac/Linux
    # ou
    .venv\Scripts\activate     # Windows
