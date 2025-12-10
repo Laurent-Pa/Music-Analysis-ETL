@@ -5,7 +5,13 @@ Cours EPSI : Intégration de données. TP: LabelSound a besoin d'un ETL pour cha
 ## Structure du repository
 ```
 project/
+├── .venv              # créé localement par chaque dev
 ├── app/               # FastAPI
+│   ├── models/
+│         ├── schemas.py
+│   ├── routers/
+│         ├── spotify.py
+│   ├── main.py
 ├── data
 │   ├── processed
 │   ├── raw
@@ -15,6 +21,9 @@ project/
 ├── src/               # Code modulaire (à remplir progressivement)
 │   ├── __init__.py
 │   ├── etl/
+│         ├── extractors.py
+│         ├── transformers.py
+├── .gitignore
 ├── requirements.txt
 └── README.md
 
@@ -45,3 +54,11 @@ project/
 ```bash
    jupyter notebook
 ```
+
+5. Lancer l'application depuis la console
+```bash
+   uvicorn app.main:app --reload
+```
+
+Pour accéder à la documentation et tester les API
+http://127.0.0.1:8000/docs
