@@ -60,5 +60,42 @@ project/
    uvicorn app.main:app --reload
 ```
 
-Pour accéder à la documentation et tester les API
-http://127.0.0.1:8000/docs
+## Utilisation
+
+### Obtenir les n premiers genres musicaux les plus populaires
+
+#### Requête cURL
+```bash
+curl -X GET "http://127.0.0.1:8000/spotify/top-genres?top_n=3"
+```
+
+#### Requête Python
+```python
+import requests
+
+response = requests.get("http://127.0.0.1:8000/spotify/top-genres", params={"top_n": 3})
+data = response.json()
+
+print(f"Top 3 des genres : {data['top_genres']}")
+print(f"Total de morceaux analysés : {data['total_tracks_analyzed']}")
+```
+
+#### Réponse attendue (200 OK)
+```json
+{
+  "top_genres": {
+    "pop": 28575,
+    "rock": 17531,
+    "hip-hop": 16835
+  },
+  "total_tracks_analyzed": 1686
+}
+```
+
+#### Paramètres
+- **top_n** (optionnel) : Nombre de genres à retourner (entre 1 et 10)
+  - Par défaut : `3`
+  - Exemple : `?top_n=5` pour obtenir le top 5
+
+#### Documentation interactive
+Accédez à la documentation complète Swagger UI : http://127.0.0.1:8000/docs
