@@ -5,14 +5,16 @@ Cours EPSI : Intégration de données. TP: LabelSound a besoin d'un ETL pour cha
 ## Structure du repository
 ```
 project/
+├── app/               # FastAPI
+├── data
+│   ├── processed
+│   ├── raw
 ├── notebooks/          # Chaque dev peut travailler son ETL ici
 │   ├── etl_nb_songs_per_genre.ipynb
 │   ├── etl_popularity.ipynb
 ├── src/               # Code modulaire (à remplir progressivement)
 │   ├── __init__.py
-│   ├── data/
 │   ├── etl/
-├── app/               # FastAPI
 ├── requirements.txt
 └── README.md
 
@@ -28,7 +30,7 @@ project/
 
 2. Créer et activer l'environnement virtuel
 ```bash
-   python -m venv .venv
+   python3 -m venv .venv
    source .venv/bin/activate  # Mac/Linux
    # ou
    .venv\Scripts\activate     # Windows
