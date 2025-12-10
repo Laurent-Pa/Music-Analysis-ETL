@@ -20,9 +20,10 @@ project/
 │   ├── etl_popularity.ipynb
 ├── src/               # Code modulaire (à remplir progressivement)
 │   ├── __init__.py
-│   ├── etl/
-│         ├── extractors.py
-│         ├── transformers.py
+│   ├── extractors/
+│         ├── extractor_spotify.py
+│   ├── transformers/
+│         ├── transformer_spotify.py
 ├── .gitignore
 ├── requirements.txt
 └── README.md
