@@ -1,7 +1,7 @@
 import pandas as pd
 from typing import Dict
 
-def get_top_genres_by_popularity(df: pd.DataFrame, top_n: int = 3) -> Dict[str, float]:
+def get_top_genres_by_popularity(df: pd.DataFrame, top_n: int = 3) -> Dict[str, int]:
     """
     Nettoie les données et retourne les N genres les plus populaires.
 
@@ -10,7 +10,7 @@ def get_top_genres_by_popularity(df: pd.DataFrame, top_n: int = 3) -> Dict[str, 
         top_n: Nombre de genres à retourner (par défaut 3)
 
     Returns:
-        Dictionnaire {genre: popularité_totale} des top N genres
+        Dictionnaire {genre: popularité_moyenne} des top N genres (valeurs arrondies en entiers)
     """
     # Copie pour ne pas modifier l'original
     df_clean = df.copy()
@@ -29,9 +29,85 @@ def get_top_genres_by_popularity(df: pd.DataFrame, top_n: int = 3) -> Dict[str, 
     print(f"✅ Dataset final : {df_clean.shape[0]} lignes, {df_clean.shape[1]} colonnes")
 
     # Calculer la popularité totale par genre
-    popularity_by_genre = df_clean.groupby('playlist_genre')['track_popularity'].sum()
+    popularity_by_genre = df_clean.groupby('playlist_genre')['track_popularity'].mean().sort_values(ascending=False)
+
+    
 
     # Trier et prendre les top N
     top_genres = popularity_by_genre.sort_values(ascending=False).head(top_n)
 
-    return top_genres.to_dict()
+    # Convertir les valeurs en entiers (arrondir)
+    return {genre: int(round(popularity)) for genre, popularity in top_genres.to_dict().items()}
+
+
+
+def compute_duration_popularity_correlation(df: pd.DataFrame) -> float:
+    """
+    Calcule la corrélation entre la durée (en minutes) et la popularité des morceaux.
+
+    Args:
+        df: DataFrame Spotify contenant les colonnes 'duration_ms' et 'track_popularity'
+
+    Returns:
+        Corrélation (float) entre la durée et la popularité.
+
+    Raises:
+        ValueError: Si les colonnes requises sont absentes, ou si la corrélation est indéfinissable.
+    """
+    required_columns = {"duration_ms", "track_popularity"}
+    missing = required_columns - set(df.columns)
+    if missing:
+        raise ValueError(f"Colonnes manquantes pour le calcul de corrélation: {missing}")
+
+    df_clean = df[list(required_columns)].dropna()
+    if df_clean.empty:
+        raise ValueError("Impossible de calculer la corrélation: aucune donnée valide après nettoyage.")
+
+    # Conversion en minutes pour plus de lisibilité
+    df_clean = df_clean.assign(duration_min=df_clean["duration_ms"] / 60000)
+    corr = df_clean[["duration_min", "track_popularity"]].corr().iloc[0, 1]
+
+    if pd.isna(corr):
+        raise ValueError("Corrélation indéfinie (données constantes ou insuffisantes).")
+
+    return round(float(corr), 2)
+
+
+def get_top_decades_by_popularity(df: pd.DataFrame, top_n: int = 3) -> Dict[int, int]:
+    """
+    Retourne les décennies les plus populaires selon la popularité moyenne des morceaux.
+
+    Args:
+        df: DataFrame Spotify contenant 'track_album_release_date' et 'track_popularity'
+        top_n: Nombre de décennies à retourner
+
+    Returns:
+        Dictionnaire {decade: popularité_moyenne} (valeurs arrondies en entiers)
+    """
+    required_columns = {"track_album_release_date", "track_popularity"}
+    missing = required_columns - set(df.columns)
+    if missing:
+        raise ValueError(f"Colonnes manquantes pour le calcul de popularité par décennie: {missing}")
+
+    df_clean = df[list(required_columns)].dropna()
+    if df_clean.empty:
+        raise ValueError("Aucune donnée valide pour calculer la popularité par décennie.")
+
+    # Conversion en année puis en décennie
+    df_clean = df_clean.assign(
+        release_year=pd.to_datetime(df_clean["track_album_release_date"], errors="coerce").dt.year
+    )
+    df_clean = df_clean.dropna(subset=["release_year"])
+    if df_clean.empty:
+        raise ValueError("Impossible de déterminer les années de sortie après conversion.")
+
+    df_clean = df_clean.assign(decade=(df_clean["release_year"] // 10) * 10)
+
+    decade_popularity = (
+        df_clean.groupby("decade")["track_popularity"].mean().sort_values(ascending=False)
+    )
+
+    top_decades = decade_popularity.head(top_n)
+
+    # Convertir les valeurs de popularité en entiers (arrondir)
+    return {int(decade): int(round(popularity)) for decade, popularity in top_decades.items()}
