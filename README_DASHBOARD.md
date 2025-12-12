@@ -25,7 +25,9 @@ pip install -r requirements.txt
 
 Depuis la racine du projet, exécutez :
 
-streamlit run dashboard/app.pyLe dashboard sera accessible dans votre navigateur à l'adresse : `http://localhost:8501`
+'streamlit run dashboard/app.py'
+
+Le dashboard sera accessible dans votre navigateur à l'adresse : `http://localhost:8501`
 
 ### Paramètres
 
@@ -80,18 +82,17 @@ Pour les contributions liées au dashboard, suivez la convention de nommage suiv
    
    git checkout -b dashboard-backup-streamlit/votre-feature
 
-   2. **Synchroniser avec `main` pour récupérer les dernières modifications** :
+2. **Synchroniser avec `main` pour récupérer les dernières modifications** :
 
    git fetch origin main
    git merge origin/main
       Ou avec rebase (pour un historique plus propre) :
    git rebase origin/main
 
-   3. **Développer et tester vos modifications**
+3. **Développer et tester vos modifications**
 
 4. **Pousser la branche vers le remote** :sh
    git push -u origin dashboard-backup-streamlit/votre-feature
-   5. **Créer une Pull Request vers la branche principale**
 
 **Important** : Avant de créer votre PR, assurez-vous d'avoir récupéré les dernières modifications de `main` pour éviter les conflits.
 
