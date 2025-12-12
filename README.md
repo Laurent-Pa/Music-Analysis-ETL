@@ -103,5 +103,72 @@ print(f"Total de morceaux analysés : {data['total_tracks_analyzed']}")
   - `low` : utilise `low_popularity_spotify_data.csv`
   - Exemple : `?dataset=high` ou `?dataset=low`
 
+
+### Obtenir le TOP10 des titres du chart Deezer avec genres enrichis
+
+Cet endpoint récupère le chart actuel de Deezer et enrichit chaque track avec son genre musical en interrogeant les informations des albums et genres associés.
+
+#### Requête cURL
+```bash
+curl -X GET "http://localhost:8000/deezer/chart"
+```
+
+#### Requête Python
+```python
+import requests
+
+response = requests.get("http://127.0.0.1:8000/deezer/chart")
+data = response.json()
+
+print(f"Nombre de tracks : {data['total_tracks']}")
+print(f"Première track : {data['tracks'][0]}")
+
+# Afficher toutes les tracks avec leurs genres
+for track in data['tracks']:
+    print(f"🎵 {track['track']} - {track['artist']} | Genre: {track['genre']} | Explicit: {track['is_explicit_lyrics']}")
+```
+
+#### Réponse attendue (200 OK)
+```json
+{
+  "total_tracks": 10,
+  "tracks": [
+    {
+      "artist": "Miley Cyrus",
+      "artist_picture": "https://api.deezer.com/artist/75798/image",
+      "genre": "Pop",
+      "is_explicit_lyrics": false,
+      "track": "Flowers"
+    },
+    {
+      "artist": "Taylor Swift",
+      "artist_picture": "https://api.deezer.com/artist/1191615/image",
+      "genre": "Pop",
+      "is_explicit_lyrics": false,
+      "track": "Anti-Hero"
+    },
+    {
+      "artist": "Rema",
+      "artist_picture": "https://api.deezer.com/artist/1191615/image",
+      "genre": "Afro Pop",
+      "is_explicit_lyrics": false,
+      "track": "Calm Down"
+    }
+  ]
+}
+```
+
+#### Paramètres
+Aucun paramètre requis - cet endpoint retourne automatiquement le chart actuel de Deezer.
+
+#### Notes techniques
+- **Source des données** : API publique Deezer (`https://api.deezer.com/chart`)
+- **Enrichissement** : Chaque track est enrichie avec son genre musical via des appels supplémentaires aux endpoints `/album/{id}` et `/genre/{id}` de l'API Deezer
+- **Optimisation** : Un système de cache LRU est utilisé pour optimiser les appels API répétés (albums et genres identiques)
+- **Performance** : Le nombre d'appels API réels dépend du nombre d'albums et de genres uniques dans le chart
+
+#### Codes d'erreur possibles
+- **200 OK** : Données récupérées avec succès
+- **500 Internal Server Error** : Erreur lors de la récupération ou transformation des données (API Deezer indisponible, erreur de parsing, etc.)
 #### Documentation interactive
 Accédez à la documentation complète Swagger UI : http://127.0.0.1:8000/docs
