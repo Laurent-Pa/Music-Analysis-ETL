@@ -29,12 +29,15 @@ def get_top_genres_by_popularity(df: pd.DataFrame, top_n: int = 3) -> Dict[str, 
     print(f"✅ Dataset final : {df_clean.shape[0]} lignes, {df_clean.shape[1]} colonnes")
 
     # Calculer la popularité totale par genre
-    popularity_by_genre = df_clean.groupby('playlist_genre')['track_popularity'].sum()
+    popularity_by_genre = df_clean.groupby('playlist_genre')['track_popularity'].mean().sort_values(ascending=False)
+
+    
 
     # Trier et prendre les top N
     top_genres = popularity_by_genre.sort_values(ascending=False).head(top_n)
 
     return top_genres.to_dict()
+
 
 
 def compute_duration_popularity_correlation(df: pd.DataFrame) -> float:
