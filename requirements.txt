@@ -10,6 +10,7 @@ numpy==2.3.5
 # Data Visualization (si tu en as besoin pour ton ETL)
 matplotlib==3.10.7
 seaborn==0.13.2
+streamlit==1.40.1
 
 # Development Tools (optionnel - uniquement pour le développement)
 jupyter==1.1.1
