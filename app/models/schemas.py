@@ -71,6 +71,11 @@ class DeezerTrack(BaseModel):
         description="Nom de l'artiste",
         example="disiz"
     )
+    artist_picture: str = Field(
+        ...,
+        description="Photo de l'artiste",
+        example="https://api.deezer.com/artist/292/image"
+    )
     genre: Optional[str] = Field(
         None,
         description="Genre musical de la track",
@@ -87,6 +92,7 @@ class DeezerTrack(BaseModel):
             "example": {
                 "track": "Flowers",
                 "artist": "Miley Cyrus",
+                "artist_picture": " https://api.deezer.com/artist/75798/image",
                 "genre": "Pop",
                 "is_explicit_lyrics": False
             }
@@ -114,18 +120,21 @@ class DeezerChartResponse(BaseModel):
                     {
                         "track": "Flowers",
                         "artist": "Miley Cyrus",
+                        "artist_picture": "https://api.deezer.com/artist/75798/image",
                         "genre": "Pop",
                         "is_explicit_lyrics": False
                     },
                     {
                         "track": "Anti-Hero",
                         "artist": "Taylor Swift",
+                        "artist_picture": "https://api.deezer.com/artist/1191615/image",
                         "genre": "Pop",
                         "is_explicit_lyrics": False
                     },
                     {
                         "track": "Calm Down",
                         "artist": "Rema",
+                        "artist_picture": "https://api.deezer.com/artist/1191615/image",
                         "genre": "Afro Pop",
                         "is_explicit_lyrics": False
                     }

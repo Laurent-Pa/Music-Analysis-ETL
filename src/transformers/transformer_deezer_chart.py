@@ -102,11 +102,12 @@ def transform_deezer_chart(data: Dict[str, Any]) -> List[Dict[str, Any]]:
     df_tracks_final = df_tracks_filtered[[
         'title',
         'artist.name',
+        'artist.picture',
         'genre_name',
         'explicit_lyrics'
     ]].copy()
 
-    df_tracks_final.columns = ['track', 'artist', 'genre', 'is_explicit_lyrics']
+    df_tracks_final.columns = ['track', 'artist', 'artist_picture','genre', 'is_explicit_lyrics']
 
     # Convertir en liste de dictionnaires
     result = df_tracks_final.to_dict(orient='records')

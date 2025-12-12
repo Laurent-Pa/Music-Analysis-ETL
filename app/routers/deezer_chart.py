@@ -14,8 +14,8 @@ def get_deezer_chart():
     """
     Récupère le chart Deezer avec les genres enrichis.
 
-    Ce endpoint interroge l'API Deezer pour obtenir le chart actuel,
-    puis enrichit chaque track avec son genre musical en récupérant
+    Ce endpoint interroge l'API Deezer pour obtenir le top10 des titres actuel,
+    puis enrichit chaque titre avec son genre musical en récupérant
     les informations des albums et genres associés.
 
     Returns:
