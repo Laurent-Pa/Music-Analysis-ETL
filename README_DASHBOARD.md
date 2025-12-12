@@ -91,7 +91,8 @@ Pour les contributions liées au dashboard, suivez la convention de nommage suiv
 
 3. **Développer et tester vos modifications**
 
-4. **Pousser la branche vers le remote** :sh
+4. **Pousser la branche vers le remote** :
+
    git push -u origin dashboard-backup-streamlit/votre-feature
 
 **Important** : Avant de créer votre PR, assurez-vous d'avoir récupéré les dernières modifications de `main` pour éviter les conflits.
