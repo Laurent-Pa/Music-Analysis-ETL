@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from app.routers import spotify
+from app.routers import deezer_chart
 
 app = FastAPI(
     title="OpenSound Analytics API",
@@ -9,6 +10,7 @@ app = FastAPI(
 
 # Liste des routers de traitement ajoutés
 app.include_router(spotify.router)
+app.include_router(deezer_chart.router)
 
 @app.get("/")
 def read_root():
