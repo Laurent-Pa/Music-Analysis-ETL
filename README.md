@@ -67,14 +67,14 @@ project/
 
 #### Requête cURL
 ```bash
-curl -X GET "http://127.0.0.1:8000/spotify/top-genres?top_n=3"
+curl -X GET "http://127.0.0.1:8000/spotify/top-genres?top_n=3&dataset=high"
 ```
 
 #### Requête Python
 ```python
 import requests
 
-response = requests.get("http://127.0.0.1:8000/spotify/top-genres", params={"top_n": 3})
+response = requests.get("http://127.0.0.1:8000/spotify/top-genres", params={"top_n": 3, "dataset": "high"})
 data = response.json()
 
 print(f"Top 3 des genres : {data['top_genres']}")
@@ -85,9 +85,9 @@ print(f"Total de morceaux analysés : {data['total_tracks_analyzed']}")
 ```json
 {
   "top_genres": {
-    "pop": 28575,
-    "rock": 17531,
-    "hip-hop": 16835
+    "pop": 28,
+    "rock": 17,
+    "hip-hop": 16
   },
   "total_tracks_analyzed": 1686
 }
@@ -97,6 +97,11 @@ print(f"Total de morceaux analysés : {data['total_tracks_analyzed']}")
 - **top_n** (optionnel) : Nombre de genres à retourner (entre 1 et 10)
   - Par défaut : `3`
   - Exemple : `?top_n=5` pour obtenir le top 5
+- **dataset** (obligatoire) : Dataset à utiliser
+  - Valeurs possibles : `high` ou `low`
+  - `high` : utilise `high_popularity_spotify_data.csv`
+  - `low` : utilise `low_popularity_spotify_data.csv`
+  - Exemple : `?dataset=high` ou `?dataset=low`
 
 #### Documentation interactive
 Accédez à la documentation complète Swagger UI : http://127.0.0.1:8000/docs

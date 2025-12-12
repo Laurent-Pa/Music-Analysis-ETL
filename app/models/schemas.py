@@ -4,10 +4,10 @@ from typing import Dict
 class TopGenresResponse(BaseModel):
     """Modèle de réponse pour les genres les plus populaires"""
 
-    top_genres: Dict[str, float] = Field(
+    top_genres: Dict[str, int] = Field(
         ...,
-        description="Dictionnaire des genres avec leur popularité totale",
-        example={"pop": 28575.0, "rock": 17531.0, "hip-hop": 16835.0}
+        description="Dictionnaire des genres avec leur popularité moyenne (score entier)",
+        example={"pop": 28, "rock": 17, "hip-hop": 16}
     )
 
     total_tracks_analyzed: int = Field(
@@ -20,9 +20,9 @@ class TopGenresResponse(BaseModel):
         json_schema_extra = {
             "example": {
                 "top_genres": {
-                    "pop": 9.0,
-                    "rock": 8.0,
-                    "hip-hop": 7.0
+                    "pop": 28,
+                    "rock": 17,
+                    "hip-hop": 16
                 },
                 "total_tracks_analyzed": 999
             }
@@ -47,10 +47,10 @@ class DurationPopularityCorrelationResponse(BaseModel):
 class TopDecadesResponse(BaseModel):
     """Modèle de réponse pour les décennies les plus populaires."""
 
-    top_decades: Dict[int, float] = Field(
+    top_decades: Dict[int, int] = Field(
         ...,
-        description="Décennies avec la popularité moyenne des morceaux",
-        example={"1990": 65.2, "1980": 62.1, "2000": 60.5},
+        description="Décennies avec la popularité moyenne des morceaux (score entier)",
+        example={1990: 65, 1980: 62, 2000: 60},
     )
     total_tracks_analyzed: int = Field(
         ...,

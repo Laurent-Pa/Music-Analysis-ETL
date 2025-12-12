@@ -1,7 +1,7 @@
 import pandas as pd
 from typing import Dict
 
-def get_top_genres_by_popularity(df: pd.DataFrame, top_n: int = 3) -> Dict[str, float]:
+def get_top_genres_by_popularity(df: pd.DataFrame, top_n: int = 3) -> Dict[str, int]:
     """
     Nettoie les données et retourne les N genres les plus populaires.
 
@@ -10,7 +10,7 @@ def get_top_genres_by_popularity(df: pd.DataFrame, top_n: int = 3) -> Dict[str, 
         top_n: Nombre de genres à retourner (par défaut 3)
 
     Returns:
-        Dictionnaire {genre: popularité_totale} des top N genres
+        Dictionnaire {genre: popularité_moyenne} des top N genres (valeurs arrondies en entiers)
     """
     # Copie pour ne pas modifier l'original
     df_clean = df.copy()
@@ -36,7 +36,8 @@ def get_top_genres_by_popularity(df: pd.DataFrame, top_n: int = 3) -> Dict[str, 
     # Trier et prendre les top N
     top_genres = popularity_by_genre.sort_values(ascending=False).head(top_n)
 
-    return top_genres.to_dict()
+    # Convertir les valeurs en entiers (arrondir)
+    return {genre: int(round(popularity)) for genre, popularity in top_genres.to_dict().items()}
 
 
 
@@ -69,10 +70,10 @@ def compute_duration_popularity_correlation(df: pd.DataFrame) -> float:
     if pd.isna(corr):
         raise ValueError("Corrélation indéfinie (données constantes ou insuffisantes).")
 
-    return float(corr)
+    return round(float(corr), 2)
 
 
-def get_top_decades_by_popularity(df: pd.DataFrame, top_n: int = 3) -> Dict[int, float]:
+def get_top_decades_by_popularity(df: pd.DataFrame, top_n: int = 3) -> Dict[int, int]:
     """
     Retourne les décennies les plus populaires selon la popularité moyenne des morceaux.
 
@@ -81,7 +82,7 @@ def get_top_decades_by_popularity(df: pd.DataFrame, top_n: int = 3) -> Dict[int,
         top_n: Nombre de décennies à retourner
 
     Returns:
-        Dictionnaire {decade: popularité_moyenne}
+        Dictionnaire {decade: popularité_moyenne} (valeurs arrondies en entiers)
     """
     required_columns = {"track_album_release_date", "track_popularity"}
     missing = required_columns - set(df.columns)
@@ -108,4 +109,5 @@ def get_top_decades_by_popularity(df: pd.DataFrame, top_n: int = 3) -> Dict[int,
 
     top_decades = decade_popularity.head(top_n)
 
-    return {int(decade): float(popularity) for decade, popularity in top_decades.items()}
+    # Convertir les valeurs de popularité en entiers (arrondir)
+    return {int(decade): int(round(popularity)) for decade, popularity in top_decades.items()}
